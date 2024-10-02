@@ -1,0 +1,31 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the function f(x) = r * x - sin(x)
+def f(x, r):
+    return r * x - np.sin(x)
+
+# Create an array of x values
+x_vals = np.linspace(-10, 10, 400)
+
+# Define different values of r for the different cases
+r_values = [-0.5, 0, 0.5, 1.5]
+labels = ['r = -0.5', 'r = 0', 'r = 0.5', 'r = 1.5']
+
+# Plot f(x) for each value of r
+plt.figure(figsize=(10, 6))
+for r, label in zip(r_values, labels):
+    y_vals = f(x_vals, r)
+    plt.plot(x_vals, y_vals, label=label)
+
+# Add labels and title
+plt.axhline(0, color='black',linewidth=0.5)  # x-axis
+plt.axvline(0, color='black',linewidth=0.5)  # y-axis
+plt.title('Plot of f(x) = r*x - sin(x) for different values of r')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+
+# Show the plot
+plt.grid(True)
+plt.show()
