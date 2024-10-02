@@ -1,0 +1,46 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import animation
+from IPython.display import HTML
+
+
+# create a figure and axes
+fig = plt.figure(figsize=(12,5))
+ax1 = plt.subplot(1,2,1)
+
+plt.rcParams['font.family'] = 'serif'
+
+# set up the subplots as needed
+ax1.set_xlim(( -20, 20))            
+ax1.set_ylim((-120, 250))
+ax1.set_xlabel('x')
+ax1.set_ylabel('$dot{x}$')
+
+# create objects that will change in the animation. These are
+# initially empty, and will be given new values for each frame
+# in the animation.
+txt_title = ax1.set_title('')
+line1, = ax1.plot([], [], 'b', ls='-', lw=2)     # ax.plot returns a list of 2D line objects
+line2, = ax1.plot([], [], 'k', ls='--', lw=2)
+line3, = ax1.plot([], [], 'k', ls='--', lw=2)
+
+#ax1.legend(['sin','cos']);
+
+x = np.linspace(-15, 15, 1000)
+k = np.linspace(-20,20,20)
+l = 2 #random value for l to call back to in function
+
+# animation function. This is called sequentially
+def drawframe(n):
+    xdot = l*np.sin(x)*(np.cos(x)-k[n])
+    line1.set_data(x, xdot)
+    line2.set_data([-30,30],[0,0])
+    line3.set_data([0,0],[-120,500])
+    txt_title.set_text('k = {0:4f}'.format(r[n]))
+    #ax1.set_ylim(min(xdot),max(xdot))
+    return (line1,line2,line3)
+
+frame_num = len(k)
+anim = animation.FuncAnimation(fig, drawframe, frames=frame_num, interval=1000)#, blit=True)
+
+HTML(anim.to_htm15_video())
